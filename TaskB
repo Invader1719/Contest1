@@ -1,0 +1,19 @@
+import math
+from decimal import *
+
+getcontext().prec = 6
+
+n = int(input())
+A = list(map(float, input().split()))
+for i in range(n):
+    A[i] = math.log10(A[i])
+q = int(input())
+
+Prefix_sum = [0] * (n+1)
+
+for i in range(n):
+    Prefix_sum[i] = Prefix_sum[i-1] + A[i]
+    
+for j in range(q):
+    l, r = map(int, input().split())
+    print(math.pow(10, (Prefix_sum[r] - Prefix_sum[l-1])/(r-l+1)))
