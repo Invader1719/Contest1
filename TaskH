@@ -1,0 +1,36 @@
+def QuickSort(array):
+    if len(array) > 1:
+        mid = len(array) // 2
+        left = array[:mid]
+        right = array[mid:]
+        QuickSort(left)
+        QuickSort(right)
+
+        L_pointer = R_pointer = array_pointer = 0
+
+        while L_pointer < len(left) and R_pointer < len(right):
+            if left[L_pointer] < right[R_pointer]:
+                array[array_pointer] = left[L_pointer]
+                L_pointer += 1
+            else:
+                array[array_pointer] = right[R_pointer]
+                R_pointer += 1
+            array_pointer += 1
+
+        while L_pointer < len(left):
+            array[array_pointer] = left[L_pointer]
+            L_pointer += 1
+            array_pointer += 1
+
+        while R_pointer < len(right):
+            array[array_pointer] = right[R_pointer]
+            R_pointer += 1
+            array_pointer += 1
+            
+    return array
+
+amount = int(input())
+array = []
+for qwe in range(amount):
+    array.append(int(input()))
+print(*QuickSort(array))
