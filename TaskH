@@ -1,36 +1,36 @@
-def ms(nums):
-    if len(nums) > 1:
-        mid = len(nums) // 2
-        left = nums[:mid]
-        right = nums[mid:]
-        ms(left)
-        ms(right)
+def QuickSort(array):
+    if len(array) > 1:
+        mid = len(array) // 2
+        left = array[:mid]
+        right = array[mid:]
+        QuickSort(left)
+        QuickSort(right)
 
-        i = j = k = 0
+        L_pointer = R_pointer = array_pointer = 0
 
-        while i < len(left) and j < len(right):
-            if left[i] < right[j]:
-                nums[k] = left[i]
-                i += 1
+        while L_pointer < len(left) and R_pointer < len(right):
+            if left[L_pointer] < right[R_pointer]:
+                array[array_pointer] = left[L_pointer]
+                L_pointer += 1
             else:
-                nums[k] = right[j]
-                j += 1
-            k += 1
+                array[array_pointer] = right[R_pointer]
+                R_pointer += 1
+            array_pointer += 1
 
-        while i < len(left):
-            nums[k] = left[i]
-            i += 1
-            k += 1
+        while L_pointer < len(left):
+            array[array_pointer] = left[L_pointer]
+            L_pointer += 1
+            array_pointer += 1
 
-        while j < len(right):
-            nums[k] = right[j]
-            j += 1
-            k += 1
-    return nums
-
+        while R_pointer < len(right):
+            array[array_pointer] = right[R_pointer]
+            R_pointer += 1
+            array_pointer += 1
+            
+    return array
 
 amount = int(input())
-A = []
-for i in range(amount):
-    A.append(int(input()))
-print(*ms(A))
+array = []
+for qwe in range(amount):
+    array.append(int(input()))
+print(*QuickSort(array))
