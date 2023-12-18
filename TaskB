@@ -1,0 +1,22 @@
+import math
+from decimal import *
+
+getcontext().prec = 6
+
+amount = int(input())
+volume = list(map(float, input().split()))
+#В задаче просят посчитать громкость мандрагор
+for i in range(amount):
+    volume[i] = math.log10(volume[i])
+requests = int(input())
+
+Prefix_sum = [0] * (amount + 1)
+
+for i in range(amount):
+    Prefix_sum[i] = Prefix_sum[i - 1] + volume[i]
+
+for j in range(requests):
+    left_bound, right_bound = map(int, input().split())
+    print(math.pow(10, (Prefix_sum[right_bound] -
+                        Prefix_sum[left_bound - 1]) /
+                   (right_bound - left_bound + 1)))
