@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+
+const int kChar = 256;
+const int kByte = 8;
+
+void CountSort(int amount, std::vector<long long>& array, std::vector<int>& cnt,
+              int byte) {
+  for (int i = 1; i <= amount; ++i) {
+    int current_byte = *((unsigned char*)&array[i] + byte);
+    cnt[current_byte]++;
+  }
+}
+
+void ByteSort(int amount, std::vector<long long>& array, std::vector<int>& cnt,
+               int byte) {
+  for (int i = 1; i < kChar; ++i) {
+    cnt[i] += cnt[i - 1];
+  }
+  std::vector<long long> current(amount + 1, 0);
+  for (int i = amount; i >= 1; --i) {
+    int current_byte = *((unsigned char*)&array[i] + byte);
+    current[cnt[current_byte]--] = array[i];
+  }
+  std::swap(array, current);
+  cnt.assign(kChar, 0);
+}
+
+void Print(int amount, std::vector<long long>& array) {
+  for (int i = 0; i < amount; ++i) {
+    std::cout << array[i + 1] << '\n';
+  }
+}
+
+int main() {
+  int amount; // Total amount of numbers
+  std::cin >> amount;
+  std::vector<long long> array(amount + 1);
+  for (int i = 1; i <= amount; ++i) {
+    std::cin >> array[i];
+  }
+  std::vector<int> cnt(kChar, 0);
+  for (int byte = 0; byte < kByte; ++byte) {
+    CountSort(amount, array, cnt, byte);
+    ByteSort(amount, array, cnt, byte);
+  }
+  Print(amount, array);
+  return 0;
+}
